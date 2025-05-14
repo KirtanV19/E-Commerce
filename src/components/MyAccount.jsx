@@ -1,44 +1,25 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "../utils/Container";
 import { Typography } from "@material-tailwind/react";
 import { Colors } from "../utils/Color";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { loginUser } from "../redux/slices/authSlice";
 
 const MyAccount = () => {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const { user, loading, error } = useSelector((state) => state.auth);
+    const [form, setForm] = useState({ username: "", password: "" });
 
-    const navigate = useNavigate();
-
-    const handleSubmit = async (e) => {
-
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setError("");
-        setLoading(true);
-
-        if (!username || !password) {
-            setError("Username and password are required.");
-            setLoading(false);
-            return;
-        }
-
-        try {
-            const response = await axios.post("https://fakestoreapi.com/auth/login", {
-                username,
-                password,
-            });
-            localStorage.setItem("token", response.data.token);
-            navigate("/");
-        } catch (err) {
-            setError("Invalid credentials. Please try again.");
-        } finally {
-            setLoading(false);
-        }
+        dispatch(loginUser(form));
     };
+
+    if (user) return <Navigate to="/" />;
+    console.log(user);
 
     return (
         <Container
@@ -65,20 +46,25 @@ const MyAccount = () => {
                 )}
                 <div className="flex flex-col gap-5 w-full">
                     <input
-                        type="text"
+                        id="username"
                         name="username"
+                        type="text"
                         placeholder="Username"
+                        autoComplete="username"
                         className="h-12 px-4 border border-gray-300 rounded focus:outline-none focus:border-pink-500 transition"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={form.username}
+                        onChange={(e) => setForm({ ...form, username: e.target.value })}
                     />
+
                     <input
-                        type="password"
+                        id="password"
                         name="password"
+                        type="password"
                         placeholder="Password"
+                        autoComplete="current-password"
                         className="h-12 px-4 border border-gray-300 rounded focus:outline-none focus:border-pink-500 transition"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
                     <button
                         className="h-12 rounded bg-pink-500 hover:bg-pink-600 transition"

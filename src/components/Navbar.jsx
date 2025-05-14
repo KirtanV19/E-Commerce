@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
     const navigate = useNavigate();
     const { cart, wishlist } = useSelector((state) => state.products);
+    const user = useSelector(state => state.auth.user)
+    // console.log(user);
 
     return (
         <div
@@ -28,7 +30,7 @@ const Navbar = () => {
                             style={{ color: Colors.White, fontWeight: 600, fontSize: 15 }}
                             className="hidden sm:block"
                         >
-                            mhhasanul@gmail.com
+                            {user.email}
                         </Typography>
                     </div>
                     <div className="flex gap-2 items-center">
