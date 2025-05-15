@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../utils/Container";
 import { Typography } from "@material-tailwind/react";
 import { Colors } from "../utils/Color";
@@ -14,7 +14,6 @@ import {
 import { MdFavoriteBorder } from "react-icons/md";
 
 const ProductDetail = () => {
-    const { id } = useParams();
     const location = useLocation();
     const product = location.state?.product;
     const dispatch = useDispatch();
@@ -27,7 +26,7 @@ const ProductDetail = () => {
     }, [dispatch]);
 
     // console.log(product.category);
-    console.log("Wishlist", wishlist);
+    // console.log("Wishlist", wishlist);
     // console.log(isFavorited);
 
     const handleAddToCart = (item) => {
