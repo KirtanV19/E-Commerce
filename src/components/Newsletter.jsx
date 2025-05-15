@@ -5,7 +5,7 @@ import { Colors } from "../utils/Color";
 const Newsletter = () => {
     return (
         <div
-            className="h-[462px]  flex items-center justify-center"
+            className="h-[462px]  flex items-center justify-center mt-10"
             style={{
                 backgroundImage: `url(${Images.NewsletterImg})`,
                 backgroundSize: "cover",
