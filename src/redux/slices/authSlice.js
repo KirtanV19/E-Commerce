@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem("user", JSON.stringify(userInfo));
       return userInfo;
     } catch (err) {
-      return thunkAPI.rejectWithValue("Login failed. Please try again.");
+      return thunkAPI.rejectWithValue("Login failed. Please try again.", err);
     }
   }
 );
